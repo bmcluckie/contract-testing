@@ -1,0 +1,29 @@
+service: contract-testing # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python3.7
+  role: arn:aws:iam::106877218800:role/arf-dev-us-east-1-lambdaRole
+  deploymentBucket:
+     name: peloton-devops-testing  
+# you can overwrite defaults here
+  stage: dev
+  region: us-east-1
+
+
+functions:
+  arf:
+    handler: handler.main
+    events:
+     - http: POST contract-testing
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: false
